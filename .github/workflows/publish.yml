@@ -14,6 +14,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '8'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: |
+        cd ./arrow-jdbc-extension && mvn clean compile assembly:single && cd ..
+        cp ./arrow-jdbc-extension/target/arrow-jdbc*.jar ./jaydebeapiarrow/lib
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
